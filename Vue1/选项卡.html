@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .tab ul {
+            overflow: hidden;
+            width: 300px;
+        }
+
+        li {
+            list-style: none;
+            float: left;
+            width: 100px;
+            height: 45px;
+            box-sizing: border-box;
+            border-top: 1px solid #000;
+            border-right: 1px solid #000;
+            text-align: center;
+            line-height: 45px;
+            cursor: pointer
+        }
+
+        .tab ul li.active {
+            background-color: purple;
+        }
+
+        .tab div {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            box-sizing: border-box;
+            background-color: #fff;
+            border: 1px solid #000;
+            display: none;
+        }
+
+        .tab div.current {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="tab">
+            <ul>
+                <li @click="change(index)" :class="currentIndex==index?'active':''" :key="item.id"
+                    v-for="(item,index) in list">{{ item.title }}</li>
+            </ul>
+            <div :class="currentIndex==index?'current':''" :key="item.id" v-for="(item,index) in list">
+                {{ item.content }}</div>
+        </div>
+    </div>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            currentIndex: 0, //选项卡当前的索引
+            list: [{
+                id: 1,
+                title: '卡一',
+                content: '内容一'
+            }, {
+                id: 2,
+                title: '卡二',
+                content: '内容二'
+            }, {
+                id: 3,
+                title: '卡三',
+                content: '内容三'
+            }]
+        },
+        methods: {
+            change(index) {
+                //实现选项卡切换操作(本质就是操作类名)
+                this.currentIndex = index
+            }
+        }
+    })
+</script>
+
+</html>

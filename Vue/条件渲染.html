@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+        }
+
+        .red {
+            background-color: #f00;
+        }
+
+        .blue {
+            background-color: #00f;
+        }
+
+        .pink {
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="handleClick"> {{ text }} </button>
+        <!-- <div class="box red" v-if="num === 0"></div>
+        <div class="box pink" v-else-if="num === 1"></div>
+        <div class="box blue" v-else></div> -->
+
+        <div class="box" v-show = "show">
+            <div class="box red"></div>
+            <div class="box pink"></div>
+        </div>
+        
+        <!-- <div class="box" v-if = "show">
+            <div class="box red"></div>
+            <div class="box pink"></div>
+        </div> -->
+
+    </div>
+</body>
+
+<script>
+    /*
+        v-if控制元素的显示与隐藏
+        v-else 控制元素的显示隐藏与v-if配合,中间不能有任何东西
+        v-else-if
+        v-show 控制元素的显示与隐藏
+
+        区别1 v-if控制dom的移除和添加
+              v-show控制dom的样式显示与隐藏(display)
+              频繁的切换显示/隐藏要使用v-show
+              只判断一次时,用v-if
+        区别2 v-if可以写在template,v-show不能写,写了也没用
+    */
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            show: true,
+            text: '隐藏',
+            num: 0
+        },
+        methods: {
+            handleClick() {
+                this.show = !this.show;
+                this.text = this.show ? '隐藏' : '显示'
+            }
+        }
+    })
+</script>
+
+</html>

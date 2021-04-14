@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开屏广告和表单登录</title>
+</head>
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  a{
+    text-decoration:none;
+    color:#333;
+  }
+  #app{
+    overflow:hidden;
+    margin:0 auto;
+    width: 242px;
+    height: 400px;
+    position: relative;
+    background-image: url(./images/3.jpg);
+    background-size:100% 100%;
+  }
+  .kp{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-image: url(./images/1.jpg);
+    background-size:100% 100%;
+  }
+  .kp>div{
+    float:right;
+    margin-top:15px;
+    margin-right:10px;
+    cursor: pointer;
+  }
+  .kp>div b{
+    font-weight:normal;
+    margin-left:5px;
+  }
+
+  h2{
+    font-weight:normal;
+    text-align:center;
+    margin-top:50px;
+    margin-bottom:15px;
+    color:#fff;
+  }
+
+.content>div{
+  width: 200px;
+  height: 80px;
+  margin-left:20px;
+}
+.content>div input{
+  width: 200px;
+  height: 40px;
+  border-radius:5px;
+  border:none;
+  outline:none;
+  border:1px solid deepskyblue;
+  text-indent:10px;
+}
+.content>div p{
+  margin:5px 0;
+}
+.content>div input.btn{
+  text-indent:0px;
+  background-color: deepskyblue;
+  color:#fff;
+}
+
+.zhuce{
+  text-align:center;
+  margin-top:5px;
+  font-size:12px;
+}
+.zhuce a:nth-child(1){
+  margin-right:10px;
+}
+</style>
+<script src="./js/vue.js"></script>
+<body>
+  <div id="app">
+
+    <div class="kp" v-show="adBack">
+      <div @click="jump()">跳过广告<b>{{ n }}</b></div>
+    </div>
+
+    <div class="content">
+      <h2>欢迎登录</h2>
+      <div>
+        <input type="text" placeholder="手机号码" v-model="mobile">
+        <p v-show="!mobile">手机号不能为空</p>
+      </div>
+      <div>
+        <input type="password" placeholder="登录密码" v-model="password">
+        <p v-show="!password">密码不能为空</p>
+      </div>
+      <div>
+        <input type="submit" value="登录" class="btn" @click="login()" :disabled="!mobile || !password">
+      </div>
+      <div class="zhuce">
+        <a href="#">我要注册</a>
+        <a href="#">忘记密码</a>
+      </div>
+    </div>
+ 
+    
+  </div>
+</body>
+<script>
+  let vm = new Vue({
+    el:"#app",
+    data:{
+      adBack:true,//开屏广告的显示与隐藏
+      n:5,  //开屏倒计时
+      timer:null, //定时器
+      mobile:"",
+      password:""
+    },
+    methods:{
+      play(){
+        this.timer = setInterval(this.autoplay,1000)
+      },
+      autoplay(){
+        this.n--
+        if(this.n==0){
+          // this.adBack = false; //开屏广告隐藏
+          // clearInterval(this.timer) //清楚定时器
+          this.jump()
+        }
+      },
+      jump(){
+        this.adBack = false;  //开屏广告隐藏
+        clearInterval(this.timer) //清楚定时器
+      },
+      login(){ //登录
+        //判断是否为空
+        if(!this.mobile || !this.password){
+          alert("请输入信息")
+        }else{
+          //发送请求
+          axios({
+            methods:"post",
+            url:"http://localhost",
+            data:JSON.stringify({mobile:this.mobile,password:this.password})
+          }).then(function(res){
+            console.log(res);
+          }).catch(function(error){
+            console.log(error);
+          })
+        }
+      }
+    },
+    mounted:function(){ //生命周期   勾子函数
+      this.play()
+    }
+  })
+</script>
+</html>

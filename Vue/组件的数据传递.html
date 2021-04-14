@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <my-content v-bind = "childrenInfo" @add = "handleAdd"></my-content>
+        父组件内的number: {{childrenInfo.number}}
+        <button @click = "handleClick">点击</button>
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            childrenInfo:{
+                title: '减肥时空计划',
+                content: '哈哈动画和发挥会发生',
+                number:0,
+                obj:{
+                    a:1,
+                    b:10
+                }
+            }
+        },
+        methods:{
+            handleAdd(num){
+                this.childrenInfo.number = num;
+            },
+            handleClick(){
+                this.childrenInfo.title = "小明"
+            }
+        },
+        components: {
+            myContent: {
+                // props:['title','content'],
+                //校验
+                props:{
+                    title:{
+                        type:String,
+                        default:'小明' //默认值
+                    },
+                    content:{
+                        type:Number,
+                        required:true,
+                        validator(val){
+                            return val>10000
+                        }
+                    },
+                    number:{
+                        type:Number
+                    },
+                    obj:{
+                        type:Object
+                    }
+                },
+                data(){
+                    return {
+                        ownNumber:this.number
+                    }
+                },
+                template: `
+                    <div>
+                        <h4> {{ title }} </h4>
+                        <p> {{ content }}</p>
+                        <div> 子组件的number:{{ ownNumber }} </div>
+                       
+                        <button @click = "handleClick">add</button>
+
+                    </div>
+                `,
+                methods:{
+                    handleClick(){
+                        this.ownNumber+=10;
+                        this.$emit('add',this.ownNumber);
+                    }
+                }
+            }
+        }
+    })
+</script>
+
+</html>

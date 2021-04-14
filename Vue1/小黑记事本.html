@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小黑记事本</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        #app {
+            margin: 50px auto;
+            width: 300px;
+            background-color: #ccc;
+            padding: 10px;
+        }
+
+        h2 {
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 26px;
+            font-weight: normal;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        main {
+            border-radius: 10px;
+            padding-left: 10px;
+            background-color: #fff;
+            overflow: hidden;
+        }
+
+        .input {
+            border: none;
+            outline: none;
+            width: 290px;
+            height: 30px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        main p {
+            line-height: 30px;
+        }
+
+        ul {
+            margin-top: 10px;
+        }
+
+        ul li {
+            height: 30px;
+            line-height: 30px;
+            border-bottom: 1px solid #ccc;
+            padding-right: 10px;
+            font-size: 14px;
+        }
+
+        .index {
+            float: left;
+            margin-right: 5px;
+        }
+
+        .right {
+            float: right;
+        }
+
+        ul li .right {
+            cursor: pointer;
+            display: none;
+        }
+
+        ul li:hover .right {
+            display: block;
+        }
+
+        .footer {
+            width: 280px;
+            height: 30px;
+            font-size: 16px;
+            padding-right: 20px;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .num {
+            float: left;
+        }
+
+        .num span {
+            color: #f40;
+            padding-left: 5px;
+        }
+
+        .clear {
+            float: right;
+        }
+    </style>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>小黑记事本</h2>
+        <main>
+            <input type="text" v-model="inputValue" @keyup.enter="add" placeholder="请输入内容" class="input">
+            <ul>
+                <li v-for="(item,index) in list">
+                    <span class="index"> {{ index + 1 }}</span>
+                    {{ item }}
+                    <span class="right" @click="remove(index)">x</span>
+                </li>
+            </ul>
+            <div class="footer">
+                <div class="num">总条数:<span v-if="list.length!=0">{{ list.length }}</span></div>
+                <div class="clear" @click="clear" v-show="list.length!=0">清空</div>
+            </div>
+        </main>
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            list: ['写代码', '吃饭饭', '睡觉觉', '打豆豆'],
+            inputValue: ''
+        },
+        methods: {
+            add() {
+                if (this.inputValue == " ") {
+                    return
+                } else {
+                    this.list.push(this.inputValue);
+                    this.inputValue = " ";
+                }
+            },
+            remove(index) {
+                this.list.splice(index, 1)
+            },
+            clear() {
+                this.list = []
+            }
+        }
+    })
+
+    
+</script>
+
+</html>

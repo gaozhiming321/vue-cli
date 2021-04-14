@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <cpn1></cpn1>
+        <cpn2></cpn2>
+    </div>
+
+    <template id="t1">
+        <div>
+            我是cpn1
+            {{ attr2 }}
+        </div>
+    </template>
+
+    <template id="t2">
+        <div>
+            我是cpn2
+            <button @click="send">将cpn2的数据传送给cpn1</button>
+        </div>
+
+    </template>
+</body>
+<script>
+
+
+/*
+    vm.$on( event, callback )
+    参数：
+    {string | Array<string>} event (数组只在 2.2.0+ 中支持)
+    {Function} callback
+    用法：
+    监听当前实例上的自定义事件。事件可以由 vm.$emit 触发。回调函数会接收所有传入事件触发函数的额外参数。
+
+    vm.$once( event, callback )
+    参数：
+    {string} event
+    {Function} callback
+    用法：
+    监听一个自定义事件，但是只触发一次。一旦触发之后，监听器就会被移除。
+
+    vm.$off( [event, callback] )
+    参数：
+    {string | Array<string>} event (只在 2.2.2+ 支持数组)
+    {Function} [callback]
+    用法：
+    移除自定义事件监听器。
+    如果没有提供参数，则移除所有的事件监听器；
+    如果只提供了事件，则移除该事件所有的监听器；
+    如果同时提供了事件与回调，则只移除这个回调的监听器。
+    
+    vm.$emit( eventName, […args] )
+    参数：
+    {string} eventName
+    [...args]
+    触发当前实例上的事件。附加参数都会传给监听器回调。
+*/
+
+    var event = new Vue({});
+
+    var vm = new Vue({
+        el: "#app",
+        components: {
+            "cpn1": {
+                template: `#t1`,
+                data() {
+                    return {
+                        attr1: "我是cpn1的数据",
+                        attr2: ""
+                    }
+                },
+                mounted() {
+                    //接受
+                    event.$on('e-world', attr2 => {
+                        this.attr2 = attr2
+                    })
+
+                }
+            },
+            "cpn2": {
+                template: `#t2`,
+                data() {
+                    return {
+                        attr2: "我是cpn2的数据"
+                    }
+                },
+                methods: {
+                    send() {
+                        //发送
+                        event.$emit('e-world', this.attr2)
+                    }
+                }
+            }
+        }
+    })
+</script>
+
+</html>

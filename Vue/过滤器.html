@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+
+<body>
+	<div id="app">
+		<input type="text" v-model="msg">
+		<div>{{msg | upper}}</div>
+		<div>{{msg | lower}}</div>
+		<div :abc="msg | upper">测试数据</div>
+	</div>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+	/*
+	
+		自定义过滤器(全局)
+		Vue.filter('过滤器名称',function(value){
+			//过滤器业务逻辑
+		})
+		局部
+		filters:{
+			upper(val){
+				return val.charAt(0).toUpperCase() + val.slice(1)
+			}
+		}
+		过滤器的使用
+		<div>{{msg|upper}}</div>
+		<div>{{msg|upper|lower}}</div>
+		<div :id="id|formatId"></div>
+	*/
+	// Vue.filter("upper",function(val){
+	//  return val.charAt(0).toUpperCase() + val.slice(1)
+	// });
+
+
+	Vue.filter("lower", function (val) {
+		return val.charAt(0).toLowerCase() + val.slice(1)
+	})
+	
+	const vm = new Vue({
+		el: "#app",
+		data: {
+			msg: ""
+		},
+		filters: {
+			upper(val) {
+				return val.charAt(0).toUpperCase() + val.slice(1)
+			}
+		}
+	})
+</script>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- {{ "abc" }}
+        {{ [1,2,3,4] }}
+        {{ {a:1,b:2} }}
+        {{ undefined }}
+        {{ null }}
+        {{ 2*3 }} -->
+
+        {{ a }}
+    </div>
+</body>
+<script>
+    /*
+        element 元素
+        1,插值表达式{{}}能进行文本插值 ,内容为值类型以及js表达式 
+        2,vue提供的方法都以$开头
+        3,vm.$el获取元素
+        4,vm.$mount() 挂载元素,相当于el
+        2,vm.$nextTick()在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM（当数据更新了，在dom中渲染后，自动执行该函数，）
+        
+    */
+    const vm = new Vue({
+        // el: "#app",
+        data: {
+            a: 10
+        }
+    })
+    vm.$mount("#app");
+    vm.a = 20;
+    vm.a = 90;
+    vm.a = 100;
+    console.log(vm.a); //100
+    console.log(vm.$el.innerHTML); //10
+    vm.$nextTick(()=>{
+        console.log(vm.$el.innerHTML);//100
+    })
+</script>
+
+</html>

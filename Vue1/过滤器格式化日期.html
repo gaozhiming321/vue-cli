@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>日期</title>
+	</head>
+	<body>
+		<div id="app">
+			{{ date | format("yyyy-MM-dd") }}
+		</div>
+		<script src="./js/vue.js"></script>
+		<script>
+		/*
+			日期格式化规则
+			y 年
+			M 年中的月份(1~12)
+			d 月份中的天(1~31)
+			h 小时
+			m 分
+			s 秒
+			S 毫秒
+			q 极度
+			
+			
+		*/
+	   
+	   Vue.filter("format",function(value,arg){
+		   // console.log(arg)
+		   if(arg == "yyyy-MM-dd") {
+			   var ret = ""
+			  return ret += value.getFullYear() + "-" + (value.getMonth()+1)+"-"+value.getDate()
+		   }
+		 })
+		 
+
+		 
+			const vm = new Vue({
+				el:"#app",
+				data:{
+					date: new Date()
+				}
+			})
+		</script>
+	</body>
+</html>

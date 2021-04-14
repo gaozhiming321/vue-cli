@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多级导航目录</title>
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_1567651_sqeqk8uymfh.css">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      background-color: #e2e2e2;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+
+    .list {
+      width: 300px;
+    }
+
+    .list>li {
+      background-color: deeppink;
+    }
+
+    .list>li a {
+      display: block;
+      padding-right:20px;
+      height: 50px;
+      line-height: 50px;
+    }
+
+    .list>li a i {
+      float: left;
+      padding-right: 20px;
+      padding-left: 10px;
+    }
+
+    .list>li a b {
+      float: right;
+    }
+
+    .subList {
+      background-color: skyblue;
+    }
+
+    .subList>li a {
+      padding-left: 20px;
+    }
+
+    .list .selected {
+      background-color: pink;
+    }
+
+    .list>li b {
+      transition: all ease 1s;
+      transform-origin: center;
+    }
+
+    .down {
+      transform: rotate(180deg);
+    }
+
+    .up {
+      transform: rotate(0deg);
+    }
+  </style>
+  <script src="./js/vue.js"></script>
+  <script src="./js/daohang.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <ul class="list">
+      <!-- <li  v-for="(item,i) in items">
+        <a @click = "curShow(item)">
+          <i class="iconfont icon-nanzhuang"></i>
+            {{item.name}}
+          <b>^</b>
+        </a>
+        <ul class="subList" v-show="item.flag">
+          <li v-for="sub in item.subItem" >
+            <a> {{sub.name}} </a>
+          </li>
+        </ul>
+      </li> -->
+
+
+      <li v-for="(item,i) in items">
+        <a @click="n=i" :class="n==i?'selected':''">
+          <i class="iconfont icon-nanzhuang"></i>
+          {{item.name}}
+          <b :class="n==i?'down':'up'">^</b>
+        </a>
+        <ul class="subList" v-show="i==n">
+          <li v-for="sub in item.subItem">
+            <a> {{sub.name}} </a>
+          </li>
+        </ul>
+      </li>
+    
+    </ul>
+  </div>
+</body>
+
+</html>

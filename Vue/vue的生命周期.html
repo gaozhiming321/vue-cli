@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model = "msg">
+        <button @click = "kill">销毁对象</button>
+    </div>
+</body>
+<script>
+    /*
+        本页面在打开之前执行前四个
+        beforeCreate
+        created
+        beforeMount
+        mounted
+        beforeUpdate
+        updated
+        beforeDestroy
+        destoryed
+    
+    */
+    const vm = new Vue({
+        el:"#app",
+        data:{
+            msg:"hello world"
+        },
+        beforeCreate() {
+            console.log("小明在妈妈的肚子里")
+        },
+        created() {
+            console.log("小明已经出生了,并且拥有了自己的属性和方法")
+        },
+        beforeMount() {
+            console.log("小明恋爱了")
+        },
+        mounted() {
+            console.log("小明结婚了")
+        },
+        beforeUpdate() {
+            console.log("小明结婚之后,夫妻开始磨合,试图改变对方一些属性和行为")
+        },
+        updated() {
+            console.log("磨合完成,成为老夫老妻")
+        },
+        beforeDestroy() {
+            console.log("小明老了,生病了")
+        },
+        destroyed() {
+            console.log("小明挂了")
+        },
+        methods:{
+            add(){
+
+            },
+            kill(){
+                this.$destroy();
+            }
+        }
+    })
+</script>
+</html>

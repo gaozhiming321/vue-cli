@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        #app {
+            width: 300px;
+            height: 200px;
+            position: relative;
+        }
+        img {
+            width: 300px;
+            height: 200px;
+            border:5px solid #000;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        a {
+            text-decoration: none;
+            position: absolute;
+            top: 50%;
+            width: 30px;
+            height: 50px;
+            margin-top: -25px;
+            background-color: #ccc;
+            color:#fff;
+            font-size:30px;
+            text-align:center;
+            line-height:50px;
+        }
+        .next {
+            right: 0;
+        }
+        .prev {
+            left: 0;
+        }
+    </style>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        左边按钮索引不为零显示
+        右边按钮索引小于图片的长度显示
+     -->
+    <div id="app">
+        <img :src="imgArr[index]" alt="">
+        <a @click="prev" href="javascript:void(0)" class="prev" v-show="index!=0">上</a>
+        <a @click="next" href="#" class="next" v-show="index<imgArr.length-1">下</a>
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            imgArr: 
+                ['./images/1.png',
+                 './images/2.png', 
+                 './images/3.png', 
+                 './images/4.png', 
+                 './images/5.png',
+                 './images/6.png'
+             ],
+            index: 0
+        },
+        methods:{
+            prev(){
+                this.index--
+            },
+            next(){
+                this.index++
+            }
+        }
+    })
+</script>
+
+</html>

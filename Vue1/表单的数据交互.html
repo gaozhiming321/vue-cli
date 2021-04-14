@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单的数据交互</title>
+</head>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  button {
+    outline: none;
+    border: none;
+  }
+
+  body {
+    background-color: #fff;
+  }
+
+  #app {
+    width: 420px;
+  }
+
+  .box {
+    width: 400px;
+    padding: 10px;
+  }
+
+  .box label {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .box input {
+    width: 100%;
+    height: 30px;
+    text-indent: 10px;
+  }
+
+  .box1 label {
+    display: inline-block;
+    height: 30px;
+  }
+
+  .box1 input {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+  }
+
+  .box2 input {
+    width: 60px;
+    height: 30px;
+    text-indent: 0;
+    text-align: center;
+    color: #fff;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+  }
+
+  .box2 input:nth-child(1) {
+    background-color: rgb(26, 26, 218);
+  }
+
+  .box2 input:nth-child(2) {
+    background-color: #f00;
+  }
+
+  hr {
+    width: 420px;
+  }
+
+  table {
+    width: 420px;
+  }
+
+  caption {
+    padding: 10px 0;
+  }
+
+  tr {
+    text-align: center;
+  }
+
+  th {
+    color: #f00;
+    font-weight: bold;
+  }
+
+  .two p {
+    padding: 10px 0;
+  }
+
+  .btn button {
+    width: 60px;
+    height: 30px;
+    color: #fff;
+    border-radius: 3px;
+    background-color: blue;
+  }
+
+  .shade {
+    width: 100%;
+    height: 200px;
+    background-color: #ddd;
+    box-shadow: 0 0 5px #ccc;
+  }
+
+  .content {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+
+  .content>div {
+    line-height: 100px;
+  }
+
+  .content .btn {
+    width: 60px;
+    height: 30px;
+    color: #fff;
+  }
+
+  .content .btn1 {
+    background-color: #f00;
+  }
+
+  .content .btn2 {
+    background-color: #00f;
+  }
+
+  [v-cloak] {
+    display: none !important;
+  }
+</style>
+<script src="./js/vue.js"></script>
+<body>
+  <div id="app" v-cloak>
+    <div class="box">
+      <label>用户名</label>
+      <input type="text" placeholder="输入用户名" v-model="username">
+    </div>
+    <div class="box">
+      <label>学号</label>
+      <input type="number" v-model="number">
+    </div>
+    <div class="box box1">
+      <label>是否住校</label>
+      <input type="checkbox" v-model="checkbox">
+    </div>
+    <div class="box box2">
+      <input type="button" value="添加" @click="add()" :disabled="!username || !number" />
+      <input type="button" value="重置" @click="reset" :disabled="!username && !number" />
+    </div>
+    <hr />
+
+    
+    <table>
+      <caption>学员信息表</caption>
+      <tr>
+        <th>序号</th>
+        <th>姓名</th>
+        <th>学号</th>
+        <th>是否住校</th>
+        <th>操作</th>
+      </tr>
+      <tr class="two">
+        <td colspan="5" v-show="items.length==0">
+          <p>暂无数据</p>
+        </td>
+      </tr>
+      <tr v-for="(item,i) in items" :key="i">
+        <td>{{i+1}}</td>
+        <td>{{item.username}}</td>
+        <td>{{item.number}}</td>
+        <td>{{item.checkbox | stateFilter}}</td>
+        <td class="btn">
+          <button @click="del(i);handleClick()">删除</button>
+        </td>
+      </tr>
+    </table>
+
+    <div class="shade" v-show="flag">
+      <div class="content">
+        <div>确认删除么</div>
+        <button class="btn btn1" @click="delCur()">确认</button>
+        <button class="btn btn2" @click="quxiao()">取消</button>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  let vm = new Vue({
+    el:"#app",
+    data:{
+      nowIndex:0, //保存当前的下标
+      flag:false,
+      items:[],
+      username:"", //用户名
+      number:"",   //学号
+      checkbox:false //是否住校
+    },
+    methods:{
+      add(){
+        this.items.push({
+          username:this.username,
+          number:this.number,
+          checkbox:this.checkbox
+        })
+        this.reset();
+      },
+      reset(){
+        this.username = "";
+        this.number="";
+        this.checkbox = false;
+      },
+      handleClick(){
+        this.flag = true
+      },
+      del(i){
+        // this.items.splice(i,1);
+       this.nowIndex = i;//拿到当前要删除的那一项的下标
+      },
+      delCur(i){
+        this.items.splice(this.nowIndex,1);
+        this.flag = false;
+      },
+      quxiao(){
+        this.flag = false;
+      }
+    },
+    filters:{  //过滤器     内容 | 过滤器的名称
+      stateFilter(data){
+        switch(data){
+          case true:
+            return "住校";
+          case false:
+            return "不住校";
+          default:
+            return data
+        }
+      }
+    }
+  })
+</script>
+</html>

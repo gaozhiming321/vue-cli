@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 组件实例 -->
+  <div id="app">
+    <cpn></cpn>
+    <cpn></cpn>
+  </div>
+</body>
+
+<template id="cpn1">
+  <div>
+    <h2>当前计数：{{ counter }}</h2>
+    <button @click="add">+</button>
+    <button @click="sub">-</button>
+  </div>
+</template>
+
+<script src="./js/vue.js"></script>
+<script>
+  // ！！！!一个模板有且只有一个跟组件
+  // data为什么是一个函数？
+  //data是一个函数，每一次都返回一个新的对象，内存地址不一样，都不会相互影响
+
+
+  const app = new Vue({
+    el: "#app",
+    components: {
+      cpn: {
+        template: "#cpn1",
+        data() {
+          return {
+            counter: 0,
+          };
+        },
+        methods: {
+          add() {
+            this.counter++;
+          },
+          sub() {
+            this.counter--;
+            if (this.counter <= 0) {
+              this.counter = 0;
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
+
+</html>

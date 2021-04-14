@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <cpn :cmovies="movies" :cmessage="message"></cpn>
+  </div>
+</body>
+
+<template id="cpn2">
+            
+  <div>
+    <h2>{{ cmessage }}</h2>
+    <ul>
+      <li v-for="(item,index) in cmovies">{{ item }}</li>
+    </ul>
+  </div>
+
+</template>
+<!-- 
+    props 可以是数组，可以是对象
+    父组件传子组件，使用props，然后使用属性绑定，使用的时候 使用绑定的自定义的属性
+
+ -->
+<script src="./js/vue.js"></script>
+<script>
+  const cpn = {
+    template: "#cpn2",
+    //   props: ["cmovies","cmessage"],
+    props: {
+      //类型是数组或者对象时，默认值必须是一个函数
+      cmovies: {
+        type: Array,
+        default() {
+          return []
+        }
+      },
+      cmessage: {
+        type: String,
+        default: "aaaaa", //默认值,没有绑定时默认值生效
+        required: true  //必填值
+      }
+    },
+    data() {
+      return {};
+    },
+    methods: {},
+  };
+
+
+  const app = new Vue({
+    el: "#app",
+    data: {
+      message: "你好啊",
+      movies: ["海王", "海贼王", "秦王", "一千零一夜"],
+    },
+    components: {
+      cpn
+    },
+  });
+</script>
+
+</html>

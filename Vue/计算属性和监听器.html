@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+
+<body>
+
+    <!-- 
+        computed和mothods的区别
+        computed 计算属性是基于他们的依赖(methods)进行缓存的,同样的东西只计算一次
+        methods 方法不存在缓存,每一次都要进行执行一次,
+
+        computed 计算属性 
+                1,基于data中的数据进行处理的
+                2,必须要把返回值return出去
+                3，使用时不需要加小括号，直接使用
+        
+        watch 监听器.数据变化时执行异步或开销较大的操作
+        属性的名称要与监听的属性名保持一致
+        
+        data > methods > computed 
+     -->
+    <div id="app">
+        <!-- 姓名:{{ name }} 年龄:{{ age }} -->
+        <!-- {{ desc() }} -->
+        <div>  {{ desc }} </div>
+       
+        <!-- {{ looks }} -->
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            name: "xiaoming",
+            age: 18,
+            looks: 'very',
+            // desc:'姓名:xiaoming 年龄:18'
+        },
+        methods: {
+            // desc(){
+            //     console.log("---mothods--");
+            //     return `姓名:${this.name} 年龄:${this.age}`
+            // }
+        },
+        watch: {
+            // name(){
+            //     console.log("--watch--");
+            //     this.desc = '姓名:${this.name} 年龄:${this.age}'
+            // },
+            // age(){
+            //     this.desc = '姓名:${this.name} 年龄:${this.age}'
+            // }
+        },
+        computed: {
+            desc() {
+                console.log("--computed--");
+                return `姓名:${this.name} 年龄:${this.age}`
+            }
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .square-box {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #000;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <square-change></square-change>
+    </div>
+    <!-- 
+        ref :1,dom对象的引用是该对象,组件的引用时组件的实例
+            2,ref同名时,后添加的会覆盖前面的,引用指向组后一个
+            3,在v-for的时候添加引用,引用的值是数组,数组里面是一个一个的dom对象/组件实例对象
+     -->
+</body>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+
+        },
+        components: {
+            squareChange: {
+                data() {
+                    return {
+                        colorArr: ['red', 'yellow', 'green', 'orange']
+                    }
+                },
+                template: `
+                 <div>
+                    <button 
+                        v-for = "color in colorArr"
+                        :key = "color"
+                        :style = "{background:color}"
+                        @click = "handleClick(color)"
+                        :data-color = "color"
+                    > {{ color }}</button>
+                    <div class = "square-box" ref = "squareBox"></div>
+                </div>
+                        `,
+                methods: {
+                    handleClick(color) {
+                        // const color = e.target.dataset.color
+                        const squareBox = this.$refs.squareBox;
+                        squareBox.style.background = color;
+                        console.log(color);
+                        console.log(this.$refs);
+                    }
+                }
+            }
+        }
+    })
+</script>
+
+</html>

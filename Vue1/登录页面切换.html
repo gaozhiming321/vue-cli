@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录页面切换</title>
+</head>
+<body>
+  <div id="app">
+    <div v-show = flag>
+      <label for="weixin">微信登陆</label>
+      <input type="text" placeholder="请输入微信号" id="weixin">
+    </div>
+    <div  v-show = !flag>
+      <label for="koukou">扣扣登陆</label>
+      <input type="text" placeholder="请输入扣扣号" id="koukou">
+    </div>
+    <button @click="jump()">切换类型</button>
+  </div>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+  let vm = new Vue({
+    el:"#app",
+    data:{
+      flag:true
+    },
+    methods:{
+      jump(){
+        this.flag = !this.flag;
+      }
+    }
+  })
+</script>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fuqin></fuqin>
+    </div>
+
+    <!-- 
+        1,组件默认情况下可以调自己的属性和方法,不能跨组件调用
+        2,子组件和父组件不能并列使用,子组件只能够在父组件中使用
+        3,子组件调用父组件 给子组件添加绑定父组件的属性,并且在子组件使用props[]发送请求
+     -->
+    <template id="t1">
+        <div>
+            我是父组件,{{ attr1 }}
+            {{ attr2 }}
+            <erzi :attr1="attr1" @e-world="getData"></erzi>
+        </div>
+    </template>
+
+    <template id="t2">
+        <div>
+            我是子组件,{{ attr2 }}
+            {{ attr1 }}
+
+            <button @click="send">将子组件数据传给父组件</button>
+        </div>
+    </template>
+</body>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+
+        },
+        components: {
+            "fuqin": {
+                template: `#t1`,
+                data() {
+                    return {
+                        attr1: "我是父组件的数据",
+                        attr2: ""
+                    }
+                },
+                methods: {
+                    getData(attr2) {
+                        this.attr2 = attr2;
+                    }
+                },
+                components: {
+                    "erzi": {
+                        template: `#t2`,
+                        data() {
+                            return {
+                                attr2: `我是子组件的数据`
+                            }
+                        },
+                        props: ['attr1'],
+                        methods: {
+                            send() {
+                                //通过儿子组件对象,调用emit方法,触发一个自定义事件e-world,发送数据
+                                this.$emit('e-world', this.attr2)
+                            }
+                        },
+                        //页面打开就调用
+                        mounted(){
+                            this.$emit('e-world', this.attr2)
+                        }
+                    }
+                }
+            }
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-beigongshang="con">
+    </div>
+</body>
+<script>
+    /*
+        Vue.directive()         全局自定义指令
+        第一个参数是自定义指令的名字,
+        第二个参数是自定义指令对象配置
+
+        1,bind()表示绑定元素上面,
+         el绑定的元素
+         binding 表示自定义指令的对象参数
+        2,inserted() 被绑定之定义指令的元素插入到父节点时调用
+        3,update()被绑定的值,更新时调用
+    */
+    Vue.directive("beigongshang",{
+        bind(el,binding){
+            el.style.color = binding.value.color;
+
+            console.log(binding);
+            console.log(binding.value);
+            console.log(binding.value.color)
+        },
+        inserted(){
+            console.log("被绑定自定义指令的元素插入到父节点时调用");
+        },
+        update(){
+            console.log("被绑定的值,更新时调用");
+        },
+        unbind(){
+
+        }
+    });
+
+    //表示调用了bind和update
+    // Vue.directive("beigongshang",function(el,binding){
+    // })
+    const vm = new Vue({
+        el:"#app",
+        data:{
+            msg:"hello world",
+            con:{
+               color:"red" 
+            }
+        },
+        methods:{
+
+        }
+    })
+</script>
+</html>

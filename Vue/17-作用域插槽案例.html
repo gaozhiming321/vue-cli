@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 父组件模板的所有东西都会在父级作用域内编译；子组件模板的所有东西都会在子级作用域内编译 -->
+
+        <cpn></cpn>
+
+        <cpn>
+            <template slot-scope="slot">
+                <span> {{ slot.data}} </span>
+            </template>
+        </cpn>
+
+        <cpn>
+            <!-- template 目的是获取子组件中的数据 -->
+            <!-- 2.5.xx及一下必须使用template模板 -->
+            <template slot-scope="slot">
+                <!-- <span v-for="(item,index) in slot.data"> {{ item }}- </span> -->
+                <span> {{ slot.data.join(" - ")}} </span>
+            </template>
+        </cpn>
+
+        <cpn>
+            <!-- 目的是获取子组件中的数据 -->
+            <!-- 2.5.xx及一下必须使用template模板 -->
+            <!-- slot.绑定的属性 获取的是数据中的每一项 -->
+            <template slot-scope="slot">
+                <!-- <span v-for="(item,index) in slot.data"> {{ item }}* </span> -->
+                <span> {{ slot.data.join(" * ")}} </span>
+            </template>
+        </cpn>
+    </div>
+</body>
+<template id="cpn">
+    <div>
+        <slot :data="planguages">
+            <ul>
+                <li v-for="item in planguages"> {{ item }}</li>
+            </ul>
+        </slot>
+    </div>
+</template>
+<script src="./js/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            message: "你好啊"
+        },
+        components: {
+            cpn: {
+                template: "#cpn",
+                data() {
+                    return {
+                        planguages: ['javascript', 'c++', 'java', 'python', 'c#']
+                    }
+                }
+            }
+        }
+    })
+</script>
+
+</html>

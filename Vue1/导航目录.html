@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航目录</title>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    li{
+        list-style:none;
+    }
+    a{
+        text-decoration:none;
+    }
+    #app{
+        width: 300px;
+    }
+    .list{
+        width:100%;
+    }
+    .list li{
+        background-color: pink;
+    }
+    .list li a{
+        display:block;
+        padding-left:50px;
+        line-height:50px;
+        position: relative;
+    }
+    .list li a b{
+        position: absolute;
+        top:10;
+        right:10px;
+        transform-origin: center center;
+        transition: all ease 1.5s;
+    }
+   
+    .subList li{
+        padding-left:30px;
+        background-color: aqua;
+        line-height:50px;
+    }
+    .down{
+        transform: rotate(180deg);
+    }
+    .up{
+        transform: rotate(0deg);
+    }
+
+    [v-cloak]{
+        display:none;
+    }
+</style>
+<body>
+    <div id="app" v-cloak>
+        <ul class="list">
+            <li 
+                v-for="(item,index) in lists" 
+                @click="n=index"
+                :key="item.name">
+                <a>
+                    <span>{{ item.name }}</span>
+                    <b :class="n==index?'down':'up'">^</b>
+                </a>
+                <ul class="subList" v-show="n==index">
+                    <li v-for="(subItem,index) in item.subList">{{ subItem.name }}</li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+   const lists=[
+       {
+           name:"男装",
+        //    flag:true,
+           subList:[
+               {name:"男装1",id:1},
+               {name:"男装2",id:2},
+               {name:"男装3",id:3},
+               {name:"男装4",id:4}
+           ]
+       },
+       {
+           name:"女装",
+        //    flag:false,
+           subList:[
+               {name:"女装1",id:1},
+               {name:"女装2",id:2},
+               {name:"女装3",id:3},
+               {name:"女装4",id:4}
+           ]
+       },
+       {
+           name:"童装",
+        //    flag:false,
+           subList:[
+               {name:"童装1",id:1},
+               {name:"童装2",id:2},
+               {name:"童装3",id:3},
+               {name:"童装4",id:4}
+           ]
+       }
+   ]
+
+    new Vue({
+        el:"#app",
+        data:{
+            lists,
+            n:0
+        },
+        methods:{
+            // handleClick(item){
+            //     //循环每一项，让每一项全部都隐藏
+            //     this.lists.forEach((v,i)=>{
+            //         v.flag = false
+            //     })
+            //     //让点击的这一项显示
+            //     item.flag = true
+            // }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+       <cpn><span slot="center">标题</span></cpn>
+       <cpn><button slot="left">返回</button></cpn>
+    </div>
+</body>
+<template id="cpn">
+    <div>
+        <slot name="left"><span>左边</span></slot>
+        <slot name="center"><span>中间</span></slot>
+        <slot name="right"><span>右边</span></slot>
+    </div>
+</template>
+<script src="./js/vue.js"></script>
+<script>
+    // 组件的插槽是为了让我们封装的代码具有更好的扩展性,抽取共性，保留不同
+    /*
+        1，插槽的默认值  <slot></slot>
+        2,插槽的默认值 <slot><button></button></slot>
+        3，如果多个值，同时放到组件进行替换时，一起作为替换元素
+
+    */
+    const app = new Vue({
+        el: "#app",
+        components: {
+            cpn: {
+                template: "#cpn"
+            }
+        }
+    })
+</script>
+
+</html>

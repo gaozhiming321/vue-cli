@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <cpn :c-info="info"></cpn>
+    </div>
+  </body>
+  <template id="cpn1">
+    <h2>{{ cInfo }}----{{ cInfo.name }}---{{ cInfo.age }}</h2>
+  </template>
+  <script src="./js/vue.js"></script>
+  <script>
+    // v-bind暂不支持驼峰，如果想用驼峰命名，绑定的时候要转换 - 连接
+    // eg: cInfo 要转化为 c-info
+    // childMyMessage 转化为 child-my-message
+
+    const cpn = {
+      template: "#cpn1",
+      props: {
+        cInfo: {
+          type: Object,
+          default() {
+            return {};
+          },
+        },
+      },
+    };
+
+    const app = new Vue({
+      el: "#app",
+      data: {
+        info: {
+          name: "gaozhiming",
+          age: 18,
+        },
+      },
+      components: {
+        cpn,
+      },
+    });
+  </script>
+</html>

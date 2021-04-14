@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>选项卡1</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    #app {
+      width: 600px;
+      margin: 0 auto;
+      border-top:1px solid #000;
+      border-left:1px solid #000;
+      border-right:1px solid #000;
+    }
+
+    .tabList {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: center; 
+      align-items: stretch;
+    }
+    .tabList li {
+      flex-grow: 1;
+      height: 50px;
+      text-align:center;
+      color: red;
+      line-height: 50px;
+    }
+
+    .tabList li.active {
+      background-color: aqua;
+    }
+
+    .tabContent {
+      position: relative;
+    }
+
+    .tabContent .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 300px;
+      border:1px solid #000;
+      background-color: #fff;
+      display:none;
+    }
+    .tabContent .content.on{
+      display:block;
+    }
+    [v-cloak]{
+      display:none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" v-cloak>
+    <ul class="tabList">
+      <li :class="currentIndex==index?'active':''" v-for="(item,index) in list" @click="handleClick(index)" > {{item.name}} </li>
+    </ul>
+    <div class="tabContent">
+      <div class="content" v-for="(item,index) in list" :class="currentIndex==index?'on':''"> {{item.content}} </div>
+    </div>
+  </div>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+  let vm = new Vue({
+    el: "#app",
+    data: {
+      currentIndex:0,
+      list: [{
+        name: "卡一",
+        content: "内容一",
+        id: 1
+      }, {
+        name: "卡二",
+        content: "内容二",
+        id: 2
+      }, {
+        name: "卡三",
+        content: "内容三",
+        id: 3
+      }],
+    },
+    methods: {
+      handleClick(index){
+        this.currentIndex = index
+      }
+    }
+  })
+</script>
+
+</html>

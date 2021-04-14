@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>图书管理</title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			.wrap{
+				width: 500px;
+				margin:auto;
+				text-align:center;
+			}
+			.wrap table{
+				width:100%;
+				/* collapse相邻的单元格公用同一个边框
+				separate默认值,每个单元格拥有独立的边框 */
+				border-collapse:collapse;
+			}
+			
+			.wrap th,.wrap td{
+				padding:10px;
+				border:1px solid #000;
+				height: 35px;
+				line-height: 35px;
+			}
+			.wrap th{
+				background-color: orange
+			}
+			.input {
+				width:100%;
+				height: 40px;
+				line-height:40px;
+				background-color: coral;
+			}
+			
+		</style>
+	</head>
+	<script src="./js/vue.js"></script>
+	<body>
+		
+		<div id="app">
+			<div class="wrap">
+				<div class="input">
+					<label for="text" >编号:</label>
+					<input type="text" id="id" v-model="id" :disabled = "flag">
+					<label for="name" >名称:</label>
+					<input type="text" id="name" v-model="name">
+					<button @click="handle">提交</button>
+				</div>
+				<table >
+					<tr>
+						<th>编号</th>
+						<th>名称</th>
+						<th>时间</th>
+						<th>操作</th>
+					</tr>
+					<tr :key = "item.id" v-for="item in books">
+						<td>{{item.id}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.date}}</td>
+						<td>
+							<a href="" @click.prevent="toEdit(item.id)" >修改</a>
+							<span>|</span>
+							<a href="" @click.prevent="deletaBook(item.id)">删除</a>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+		</div>
+		
+		
+		
+		
+		<script>
+			const vm = new Vue({
+				el:"#app",
+				data:{
+					id:"",
+					name:"",
+					flag:false,
+					books:[{
+						id:1,
+						name:"三国演义",
+						date:"2525609975000"
+					},{
+						id:2,
+						name:"水浒传",
+						date:"2525609975000"
+					},{
+						id:3,
+						name:"红楼梦",
+						date:"2525609975000"
+					},{
+						id:4,
+						name:"西游记",
+						date:"2525609975000"
+					}]
+				},
+				methods:{
+					handle(){
+						if(this.flag){
+							//编辑操作,根据当前的id去跟新数组中的数据
+							this.books.some((item) =>{
+								if(item.id == this.id){
+									item.name = this.name;
+									//完成跟新操作之后,要停止循环
+									return true;
+								}
+							})
+							this.flag = false;
+						}else{
+							//添加图书
+							var book = {};
+							book.id= this.id;
+							book.name = this.name;
+							book.date = "";
+							this.books.push(book);
+							//清空表单
+							this.id = "";
+							this.name = ""
+						}	
+						this.id = "";
+						this.name = ""
+					},
+					toEdit(id){
+						//禁止修改id
+						this.flag = true;
+						// console.log(id)
+						//根据id查询出要编辑的数据
+						var book = this.books.filter(function(item){
+							return item.id ==id
+						})
+						// console.log(book)
+						//把获取到的信息填充到表单
+						this.id = book[0].id;
+						this.name = book[0].name
+					},
+					deletaBook(id){
+						//删除图书
+						//数组中查找元素的索引
+						//var index = this.books.findIndex(item => item.id== id)
+						//根据索引删除数组元素
+						//this.books.splice(index,1)
+						//-------------------------------------
+						//方法二
+						this.books = this.books.filter((item)=>{
+							return item.id!=id
+						})
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

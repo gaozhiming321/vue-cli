@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+
+<body>
+    <!-- 
+        v-for 循环数组
+        arr:  (item,index)  in  arr 
+        item代表数组中的每一项
+        index 代表下标
+
+        v-for循环对象
+        obj (value,key,index) in obj 
+        value代表对象中的值
+        key代表对象的键
+        index代表下标
+
+        v-for 循环数字
+        number item in 10 
+        item 代表从1开始循环的数字
+
+        v-for 循环字符串
+        string item in 'xiaoming'
+        item 代表字符串中的每一项
+
+        添加 key 必须是唯一的 number string 
+
+
+    注意:要通过数组的方法更改数组,成为数组的变异方法(在vue中重写了)
+        1,不能通过索引的方式更改数组,这样不能渲染
+        2,不能通过长度的方式更改数组,这样不能渲染
+        push,pop,shift,unshift,split sort reverse
+
+
+    向对象内添加或者删除属性,不会渲染页面,要利用vm.$set更改
+    $.set第一个参数要更改的对象,第二个参数要改变的谁,第三个参数要改的东西
+     -->
+    <div id="app">
+        <!-- <ul>
+            <li v-for="(item,index) in arr"> {{ item }} -- {{ index }}</li>
+        </ul> -->
+        <!-- <h4 v-for = "value,key,index in obj"> {{ value }} -- {{ key }} -- {{index}}</h4> -->
+        <!-- <p v-for = "item in 10">{{item}}</p> -->
+        <!-- <div v-for = "item in 'xiaoming'"> {{ item }} </div> -->
+
+        <!-- <ul>
+            <li v-for = "fruit in fruitArr"
+            :key = "fruit"
+            > {{ fruit }} </li>
+        </ul> -->
+
+        <ul>
+            <li v-for="item in obj"> {{ item }}</li>
+        </ul>
+        <button @click="handleClick">click</button>
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            arr: ['html', 'css', 'js', 'vue'],
+            obj: {
+                name: "xiaoming",
+                age: 18,
+                looks: "beautiful"
+            },
+            fruitArr: ['香蕉', '苹果', '大鸭梨'],
+        },
+        methods: {
+            handleClick() {
+                // this.arr.push('react')
+                this.$set(this.obj,'aa',10000)
+            }
+        }
+    })
+</script>
+
+</html>

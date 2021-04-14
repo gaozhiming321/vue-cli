@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak]{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <input type="text" class="add" v-model="first">
+        <input type="text" class="sub" v-model="two">
+        <p class="result">结果：{{ result }}</p>
+        <button @click="add()">相加</button>
+        <button @click="sub()">相减</button>
+    </div>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el:"#app",
+        data:{
+            first:'',
+            two:'',
+            result:''
+        },
+        methods:{
+            add(){
+                this.result = parseInt(this.first) + parseInt(this.two);
+            },
+            sub(){
+                this.result = parseInt(this.first) + parseInt(this.two);
+            }
+        }
+    })
+</script>
+</html>

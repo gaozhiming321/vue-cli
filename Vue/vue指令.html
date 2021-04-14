@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.min.js"></script>
+</head>
+<body>
+    <!--
+        vue 响应式数据
+        数据驱动试图,数据的变化导致页面内容的变化
+
+        {{}}插值表达式 存在闪动的问题
+        v-text 设置纯文本,不识别标签 ,普通文本与v-html效果一样
+        v-html 设置HTML片段,识别标签
+        v-pre 会保留文本的原有格式,跳过编译过程
+
+        v-show 控制元素的显示/隐藏 display:block/none;
+        v-if/v-else 控制元素的显示/隐藏.可以直接做判断 
+        
+        v-for 循环遍历
+
+        v-on --- 简写@ 触发事件,为元素绑定事件click mouseenter mousedown input dblclick keyup 
+        1, @事件绑定的方法写成函数调用的形式,可以传入自定义的参数,
+        2, 定义方法时需要定义形参来接收传入的实参
+        3, 事件的后面跟上.修饰符可以对事件进行限制
+        4, .enter限制触发的按键为回车  .delete限制触发的按键为删除键
+        自定义的参数: 1,如果事件直接绑定函数名称,那么默认会传递事件对象作为事件函数的第一个参数
+        2,如果事件绑定函数调用,那么事件对象必须作为最后一个参数显示,并且事件对象的名称必须为$event
+
+        事件绑定--事件修饰符
+        .stop 阻止冒泡
+        .prevent 阻止默认行为 a标签的跳转
+        .stop.prevent 阻止冒泡,阻止默认行为
+
+
+        v-bind  绑定属性 简写成 :
+        1,对象绑定和数组绑定可以结合使用
+        2,默认的class会保留
+
+        v-model数据双向绑定1,用户修改页面的信息时,数据会改变
+                          2,修改数据时,用户的界面信息会改变
+        :value和@input的简写
+
+        v-once  只编译一次,显示内容之后就不在具有响应式的功能了
+        应用场景:如果显示的信息后续不需要修改,可以使用v-once,这样可以提高性能
+
+
+        v-cloak 解决没有同步的效果(插值表达式闪动的问题) 
+        css中设置中 1,提供样式
+        [v-cloak]{
+            display:none
+        }
+        2,在插值表达式所在的标签中添加v-cloak指令
+        背后的原理:先在样式中隐藏内容,然后在内存中进行值的替换,替换好之后再显示最终的结果
+     -->
+
+     <!-- 
+        1,实例化一个vue对象
+        2,需要对对象里面的属性和方法作一个配置,初始化
+            created
+        3,把vue对象挂在到一个元素上
+             mounted
+      -->
+    <div id="app">
+        <div v-text = "msg"></div>
+        <div v-html = "msg"></div>
+        <div v-pre = "msg">{{ msg }}</div>
+        <div v-show = "flag">aaaa</div>
+        <div v-if = "Math.random() > 0.5">出现</div>
+        <div v-else>不出现</div>
+        <ul>
+            <li v-for = "item in anum"> {{ item }}</li>
+        </ul>
+        
+        <button @click = "add('老铁','666')">点我</button>
+        <input type="text"  @keyup.enter = "sayHi">
+        <a :href="src">百度</a>
+
+        <div>{{ content }}</div>
+        <input type="text" v-model = "content">
+        <div v-once = "content">{{ content }}</div>
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el:"#app",
+        data:{
+            msg:"<h1>holle world</h1>",
+            flag:true,
+            anum:[1,2,3,4,5,6],
+            src:"https://www.baidu.com",
+            content:"hello word"
+        },
+        methods:{
+            add(p1,p2){
+                console.log(p1);
+                console.log(p2);
+            },
+            sayHi(){
+                console.log("吃饭了嘛");
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <cpn></cpn>
+    </div>
+
+    <div id="app2">
+        <cpn2></cpn2>
+    </div>
+</body>
+
+<!-- 1,script标签，注意类型必须是text/x-template -->
+<script type="text/x-template" id="cpn">
+    <div>
+        <h2>我是标题</h2>
+        <p>我是内容，哈哈哈哈哈哈</p>
+    </div>
+</script>
+
+<!-- template标签 -->
+<template id="cpn2">
+    <div>
+        <h2>我是标题</h2>
+        <p>我是内容，呵呵呵</p>
+    </div>
+</template>
+
+<script src="./js/vue.js"></script>
+<script>
+
+    //！！！！！特别注意：子组件内部是不可以直接访问vue实例里面的data数据的，或者不能引用父组件
+
+    //注册第一个全局组件
+    Vue.component('cpn',{
+        template:'#cpn'
+    })
+    const app = new Vue({
+        el:"#app"
+    })
+
+
+     //注册第二个全局组件
+    Vue.component('cpn2',{
+        template:"#cpn2"
+    })
+    const app2 = new Vue({
+        el:"#app2"
+    })
+</script>
+</html>
